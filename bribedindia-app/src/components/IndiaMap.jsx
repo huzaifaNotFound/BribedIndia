@@ -111,7 +111,10 @@ export default function IndiaMap({ stateData, selectedState, onSelectState }) {
       const ids = STATE_TO_IDS[stateName] || []
       polygonSeries.mapPolygons.each((p) => {
         const pid = p.dataItem ? p.dataItem.get('id') : null
-        if (ids.includes(pid)) p.set('active', true)
+        if (ids.includes(pid)) {
+          p.set('active', true)
+          polygonSeries.children.moveValue(p)
+        }
       })
     }
     applySelectionRef.current = applySelection

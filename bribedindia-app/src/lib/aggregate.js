@@ -157,8 +157,9 @@ export function computeAnalytics(reports) {
 }
 
 export function entityStats(reports, kind, value) {
+  const byState = kind === 'state' || kind === 'states'
   const rs = reports.filter((r) =>
-    kind === 'state' ? r.state === value : r.department_code === value
+    byState ? r.state === value : r.department_code === value
   )
   const refused = rs.filter((r) => r.report_type === 'refused_to_pay')
   const bribeTotal = rs.reduce(
