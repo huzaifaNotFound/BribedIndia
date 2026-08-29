@@ -267,7 +267,7 @@ export default function ReportWizard() {
                 />
               </div>
               <div>
-                <label className="label-upper-muted">Approximate month</label>
+                <label className="label-upper-muted">Month</label>
                 <select
                   className="input-field mt-2"
                   value={form.approx_month}
@@ -281,7 +281,7 @@ export default function ReportWizard() {
                 </select>
               </div>
               <div>
-                <label className="label-upper-muted">Approximate year</label>
+                <label className="label-upper-muted">Year</label>
                 <select
                   className="input-field mt-2"
                   value={form.approx_year}

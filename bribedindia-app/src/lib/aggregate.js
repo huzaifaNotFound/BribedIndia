@@ -42,7 +42,7 @@ export function computeStateAggregates(reports) {
 }
 
 export function computeStateDetail(reports, state) {
-  const rs = reports.filter((r) => r.state === state)
+  const rs = state ? reports.filter((r) => r.state === state) : reports
   const latest = [...rs]
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
     .slice(0, 5)

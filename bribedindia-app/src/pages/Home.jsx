@@ -77,13 +77,7 @@ function HowItWorks() {
 }
 
 function InfoPanel({ stateName, detail }) {
-  if (!stateName || !detail) {
-    return (
-      <div className="panel p-6 text-sm text-muted">
-        Click a state on the map to see its verified patterns and recent reports.
-      </div>
-    )
-  }
+  const title = stateName || 'India'
   const blocks = [
     ['Total Reports', detail.stats.total],
     ['Pending Review', detail.stats.pending],
@@ -91,7 +85,7 @@ function InfoPanel({ stateName, detail }) {
   ]
   return (
     <div className="panel p-6">
-      <h3 className="h-serif text-2xl">{stateName}</h3>
+      <h3 className="h-serif text-2xl">{title}</h3>
       <div className="mt-5 grid grid-cols-3 divide-x divide-line border-y border-line">
         {blocks.map(([label, value]) => (
           <div key={label} className="py-3 first:pr-3 [&:not(:first-child)]:px-3 last:pl-3">
@@ -103,7 +97,7 @@ function InfoPanel({ stateName, detail }) {
       <p className="label-upper mt-6">Latest Reports</p>
       <div className="mt-2 divide-y divide-line">
         {detail.latest.length === 0 ? (
-          <p className="py-3 text-sm text-muted">No reports in this state yet.</p>
+          <p className="py-3 text-sm text-muted">No reports yet.</p>
         ) : (
           detail.latest.map((r) => (
             <div key={r.id} className="flex items-center justify-between gap-3 py-3">
@@ -152,7 +146,7 @@ export default function Home() {
     }
   }, [])
 
-  const detail = selectedState ? computeStateDetail(reports, selectedState) : null
+  const detail = computeStateDetail(reports, selectedState)
 
   const handleSelectState = useCallback((s) => setSelectedState(s), [])
 
