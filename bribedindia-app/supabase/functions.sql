@@ -51,6 +51,10 @@ begin
     raise exception 'missing_client_session';
   end if;
 
+  if p_bribe_amount is not null and p_bribe_amount > 2000000 then
+    raise exception 'amount_too_large';
+  end if;
+
   select count(*)
   into v_count
   from public.submission_log

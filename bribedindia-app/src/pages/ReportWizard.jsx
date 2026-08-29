@@ -8,6 +8,7 @@ import {
   MONTHS,
   YEAR_OPTIONS,
 } from '../lib/constants.js'
+import { DISTRICTS_BY_STATE, MAX_BRIBE_AMOUNT } from '../lib/districts.js'
 import { getClientSession } from '../lib/demoStore.js'
 import { submitReport } from '../lib/data.js'
 import DeptIcon from '../components/DeptIcon.jsx'
@@ -65,7 +66,31 @@ export default function ReportWizard() {
     form.department_code &&
     (form.department_code !== 'T' || form.department_other.trim().length > 0)
 
+  const amountValue = form.bribe_amount === '' ? null : Number(form.bribe_amount)
+  const amountTooLarge =
+    amountValue !== null && !Number.isNaN(amountValue) && amountValue > MAX_BRIBE_AMOUNT
+
+  const required2 = [
+    form.state.trim().length > 0,
+    form.district.length > 0,
+    form.service.trim().length > 0,
+    form.description.trim().length > 0,
+  ]
+  const step2Valid = required2.every(Boolean) && !amountTooLarge
+
+  const handleStateChange = (state) => {
+    setForm((f) => ({
+      ...f,
+      state,
+      district: f.state !== state ? '' : f.district,
+    }))
+    setError(null)
+  }
+
+  const districtOptions = form.state ? DISTRICTS_BY_STATE[form.state] || [] : []
+
   const handleSubmit = async () => {
+    if (!step2Valid) return
     setSubmitting(true)
     setError(null)
     const result = await submitReport({
@@ -194,11 +219,13 @@ export default function ReportWizard() {
             <p className="label-upper">Details</p>
             <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
-                <label className="label-upper-muted">State</label>
+                <label className="label-upper-muted">
+                  State <span className="text-muted">*</span>
+                </label>
                 <select
                   className="input-field mt-2"
                   value={form.state}
-                  onChange={(e) => set('state')(e.target.value)}
+                  onChange={(e) => handleStateChange(e.target.value)}
                 >
                   <option value="">Select a state</option>
                   {STATES.map((s) => (
@@ -209,16 +236,29 @@ export default function ReportWizard() {
                 </select>
               </div>
               <div>
-                <label className="label-upper-muted">District</label>
-                <input
+                <label className="label-upper-muted">
+                  District <span className="text-muted">*</span>
+                </label>
+                <select
                   className="input-field mt-2"
                   value={form.district}
                   onChange={(e) => set('district')(e.target.value)}
-                  placeholder="e.g. Bengaluru Urban"
-                />
+                  disabled={!form.state}
+                >
+                  <option value="">
+                    {form.state ? 'Select a district' : 'Select a state first'}
+                  </option>
+                  {districtOptions.map((d) => (
+                    <option key={d} value={d}>
+                      {d}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="sm:col-span-2">
-                <label className="label-upper-muted">Service</label>
+                <label className="label-upper-muted">
+                  Service <span className="text-muted">*</span>
+                </label>
                 <input
                   className="input-field mt-2"
                   value={form.service}
@@ -264,14 +304,26 @@ export default function ReportWizard() {
                     className="input-field pl-7"
                     type="number"
                     min="0"
+                    max={MAX_BRIBE_AMOUNT}
                     value={form.bribe_amount}
                     onChange={(e) => set('bribe_amount')(e.target.value)}
                     placeholder="5000"
                   />
                 </div>
+                {amountTooLarge ? (
+                  <p className="mt-1.5 border border-ink bg-accent px-2 py-1 text-xs">
+                    Amount cannot exceed ₹{MAX_BRIBE_AMOUNT.toLocaleString('en-IN')}.
+                  </p>
+                ) : (
+                  <p className="mt-1.5 text-xs text-muted">
+                    Optional. Max ₹{MAX_BRIBE_AMOUNT.toLocaleString('en-IN')}.
+                  </p>
+                )}
               </div>
               <div className="sm:col-span-2">
-                <label className="label-upper-muted">Description</label>
+                <label className="label-upper-muted">
+                  Description <span className="text-muted">*</span>
+                </label>
                 <textarea
                   className="input-field mt-2 min-h-28"
                   value={form.description}
@@ -280,11 +332,22 @@ export default function ReportWizard() {
                 />
               </div>
             </div>
+            {!step2Valid ? (
+              <p className="mt-5 text-xs text-muted">
+                Fill the required fields (state, district, service, description) to
+                continue.
+              </p>
+            ) : null}
             <div className="mt-8 flex items-center justify-between">
               <button type="button" className="btn-outline" onClick={() => setStep(1)}>
                 <ArrowLeft size={14} /> Back
               </button>
-              <button type="button" className="btn-primary" onClick={() => setStep(3)}>
+              <button
+                type="button"
+                className="btn-primary"
+                disabled={!step2Valid}
+                onClick={() => setStep(3)}
+              >
                 Next <ArrowRight size={14} />
               </button>
             </div>

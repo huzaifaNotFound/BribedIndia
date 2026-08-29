@@ -1,11 +1,14 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { DISTRICTS_BY_STATE } from '../src/lib/districts.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const root = path.resolve(__dirname, '..')
 const outJs = path.join(root, 'src', 'lib', 'seedData.js')
 const outSql = path.join(root, 'supabase', 'seed_reports.sql')
+
+const DISTRICTS = DISTRICTS_BY_STATE
 
 function mulberry32(seed) {
   return function () {
@@ -18,45 +21,6 @@ function mulberry32(seed) {
 
 const rand = mulberry32(20260829)
 const pick = (arr) => arr[Math.floor(rand() * arr.length)]
-
-const DISTRICTS = {
-  'Uttar Pradesh': ['Lucknow', 'Kanpur', 'Varanasi', 'Agra', 'Prayagraj', 'Ghaziabad'],
-  Maharashtra: ['Mumbai', 'Pune', 'Nagpur', 'Nashik', 'Thane', 'Aurangabad'],
-  Bihar: ['Patna', 'Gaya', 'Muzaffarpur', 'Bhagalpur', 'Darbhanga'],
-  Karnataka: ['Bengaluru Urban', 'Mysuru', 'Belagavi', 'Hubballi', 'Mangaluru'],
-  Delhi: ['New Delhi', 'North Delhi', 'South Delhi', 'East Delhi', 'West Delhi'],
-  Rajasthan: ['Jaipur', 'Jodhpur', 'Udaipur', 'Kota', 'Bikaner'],
-  'West Bengal': ['Kolkata', 'Howrah', 'North 24 Parganas', 'Hooghly', 'Nadia'],
-  'Tamil Nadu': ['Chennai', 'Coimbatore', 'Madurai', 'Tiruchirappalli', 'Salem'],
-  'Madhya Pradesh': ['Bhopal', 'Indore', 'Gwalior', 'Jabalpur', 'Ujjain'],
-  Telangana: ['Hyderabad', 'Ranga Reddy', 'Medchal', 'Warangal'],
-  'Andhra Pradesh': ['Visakhapatnam', 'Vijayawada', 'Guntur', 'Tirupati'],
-  Gujarat: ['Ahmedabad', 'Surat', 'Vadodara', 'Rajkot', 'Gandhinagar'],
-  Punjab: ['Ludhiana', 'Amritsar', 'Jalandhar', 'Patiala'],
-  Haryana: ['Gurugram', 'Faridabad', 'Panipat', 'Rohtak'],
-  Odisha: ['Bhubaneswar', 'Cuttack', 'Rourkela', 'Berhampur'],
-  Kerala: ['Thiruvananthapuram', 'Kochi', 'Kozhikode', 'Thrissur'],
-  Jharkhand: ['Ranchi', 'Jamshedpur', 'Dhanbad'],
-  Assam: ['Guwahati', 'Silchar', 'Dibrugarh'],
-  Chhattisgarh: ['Raipur', 'Bilaspur', 'Durg'],
-  Uttarakhand: ['Dehradun', 'Haridwar', 'Nainital'],
-  'Jammu and Kashmir': ['Srinagar', 'Jammu'],
-  'Himachal Pradesh': ['Shimla', 'Kangra', 'Mandi'],
-  Goa: ['North Goa', 'South Goa'],
-  Tripura: ['Agartala'],
-  Meghalaya: ['Shillong'],
-  Manipur: ['Imphal West', 'Imphal East'],
-  Mizoram: ['Aizawl'],
-  Nagaland: ['Dimapur', 'Kohima'],
-  Sikkim: ['Gangtok'],
-  'Arunachal Pradesh': ['Itanagar'],
-  Chandigarh: ['Chandigarh'],
-  Puducherry: ['Puducherry'],
-  'Andaman and Nicobar Islands': ['South Andaman'],
-  'Dadra and Nagar Haveli and Daman and Diu': ['Silvassa'],
-  Ladakh: ['Leh', 'Kargil'],
-  Lakshadweep: ['Kavaratti'],
-}
 
 const SERVICES = {
   P: ['Traffic challan settlement', 'FIR filing', 'Complaint registration', 'Property dispute case', 'Traffic fine waiver', 'Police verification certificate'],
