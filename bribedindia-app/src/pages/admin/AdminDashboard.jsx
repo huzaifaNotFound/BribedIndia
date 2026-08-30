@@ -62,9 +62,9 @@ export default function AdminDashboard() {
   }
 
   return (
-    <section className="mx-auto max-w-4xl px-4 py-12">
-      <div className="flex items-center justify-between">
-        <h1 className="h-serif text-3xl">Pending Review Clusters</h1>
+    <section className="mx-auto max-w-4xl px-4 py-10 sm:py-12">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h1 className="h-serif text-2xl sm:text-3xl">Pending Review Clusters</h1>
         <button
           type="button"
           onClick={handleSignOut}

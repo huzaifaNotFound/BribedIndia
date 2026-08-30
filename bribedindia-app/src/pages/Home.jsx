@@ -49,8 +49,8 @@ function HowItWorks() {
     },
   ]
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16">
-      <h2 className="h-serif text-3xl">How It Works</h2>
+    <section className="mx-auto max-w-6xl px-4 py-10 sm:py-16">
+      <h2 className="h-serif text-2xl sm:text-3xl">How It Works</h2>
       <div className="mt-8 grid gap-8 md:grid-cols-2">
         {strips.map((strip) => (
           <div key={strip.title} className="panel p-6">
@@ -88,9 +88,9 @@ function InfoPanel({ stateName, detail }) {
       <h3 className="h-serif text-2xl">{title}</h3>
       <div className="mt-5 grid grid-cols-3 divide-x divide-line border-y border-line">
         {blocks.map(([label, value]) => (
-          <div key={label} className="py-3 first:pr-3 [&:not(:first-child)]:px-3 last:pl-3">
-            <p className="h-serif text-2xl">{value.toLocaleString('en-IN')}</p>
-            <p className="label-upper-muted mt-1">{label}</p>
+          <div key={label} className="py-2 first:pr-2 [&:not(:first-child)]:px-2 last:pl-2 sm:py-3 sm:first:pr-3 sm:[&:not(:first-child)]:px-3 sm:last:pl-3">
+            <p className="h-serif text-lg sm:text-2xl">{value.toLocaleString('en-IN')}</p>
+            <p className="label-upper-muted mt-1 text-[0.55rem] sm:text-[0.6875rem]">{label}</p>
           </div>
         ))}
       </div>
@@ -154,10 +154,10 @@ export default function Home() {
 
   return (
     <div>
-      <section className="mx-auto max-w-6xl px-4 py-16 text-center">
+      <section className="mx-auto max-w-6xl px-4 py-10 text-center sm:py-16">
         <p className="label-upper-muted">BribedIndia · Public record of reported bribery</p>
-        <h1 className="h-serif mt-3 text-5xl md:text-6xl">TRANSPARENCY MAP</h1>
-        <p className="mx-auto mt-4 max-w-2xl text-base text-muted">
+        <h1 className="h-serif mt-3 text-4xl sm:text-5xl md:text-6xl">TRANSPARENCY MAP</h1>
+        <p className="mx-auto mt-4 max-w-2xl text-sm text-muted sm:text-base">
           Explore state-level corruption. Click a state to see verified patterns and
           recent reports.
         </p>
@@ -172,10 +172,10 @@ export default function Home() {
         </p>
       ) : (
         <>
-          <section className="mx-auto max-w-6xl px-4 py-14">
+          <section className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
             <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
               <div>
-                <div className="panel p-4">
+                <div className="panel p-2 sm:p-4">
                   <IndiaMap
                     stateData={stateAggregates}
                     selectedState={selectedState}
@@ -195,11 +195,13 @@ export default function Home() {
           <HowItWorks />
 
           <section className="border-t border-line">
-            <div className="mx-auto max-w-6xl px-4 py-16 text-center">
-              <h2 className="h-serif text-3xl">A file in 60 seconds can start a pattern.</h2>
-              <Link to="/report" className="btn-primary mt-6">
-                Report a Bribe
-              </Link>
+            <div className="mx-auto max-w-6xl px-4 py-10 text-center sm:py-16">
+              <h2 className="h-serif text-2xl sm:text-3xl">A file in 60 seconds can start a pattern.</h2>
+              <div className="mt-6">
+                <Link to="/report" className="btn-primary">
+                  Report a Bribe
+                </Link>
+              </div>
             </div>
           </section>
         </>

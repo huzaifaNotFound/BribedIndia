@@ -118,7 +118,7 @@ export default function Analytics() {
                     dataKey="name"
                     tickLine={false}
                     axisLine={false}
-                    width={150}
+                    width={100}
                     tick={{ fontSize: 11, fill: '#1A1A1A' }}
                   />
                   <Tooltip

@@ -55,7 +55,8 @@ function lerpColor(t) {
   const r = Math.round(COLOR_MIN[0] + (COLOR_MAX[0] - COLOR_MIN[0]) * clamped)
   const g = Math.round(COLOR_MIN[1] + (COLOR_MAX[1] - COLOR_MIN[1]) * clamped)
   const b = Math.round(COLOR_MIN[2] + (COLOR_MAX[2] - COLOR_MIN[2]) * clamped)
-  return am5.color(`rgb(${r},${g},${b})`)
+  // Returns a plain hex-int number that am5.color() accepts
+  return (r << 16) | (g << 8) | b
 }
 
 export default function IndiaMap({ stateData, selectedState, onSelectState }) {
@@ -119,26 +120,28 @@ export default function IndiaMap({ stateData, selectedState, onSelectState }) {
     }
     applySelectionRef.current = applySelection
 
-    polygonSeries.mapPolygons.each((polygon) => {
-      const id = polygon.dataItem ? polygon.dataItem.get('id') : null
-      const value = polygon.dataItem ? polygon.dataItem.get('value') || 0 : 0
-      const name = nameById.get(id) || ''
-      polygon.setAll({
-        fill: am5.color(lerpColor(maxCount === 0 ? 0 : value / maxCount)),
-        stroke: am5.color('#9A968E'),
-        strokeWidth: 0.5,
-        interactive: true,
-        tooltipText: `${name}: ${value} reports`,
-      })
-      polygon.states.create('active', {
-        scale: 1.05,
-        stroke: am5.color('#1A1A1A'),
-        strokeWidth: 1,
-      })
-      polygon.events.on('click', () => {
-        const state = id ? ID_TO_STATE[id] : null
-        applySelection(state)
-        if (onSelectState) onSelectState(state)
+    polygonSeries.events.on('datavalidated', () => {
+      polygonSeries.mapPolygons.each((polygon) => {
+        const id = polygon.dataItem ? polygon.dataItem.get('id') : null
+        const value = polygon.dataItem ? polygon.dataItem.get('value') || 0 : 0
+        const name = nameById.get(id) || ''
+        polygon.setAll({
+          fill: am5.color(lerpColor(maxCount === 0 ? 0 : value / maxCount)),
+          stroke: am5.color('#9A968E'),
+          strokeWidth: 0.5,
+          interactive: true,
+          tooltipText: `${name}: ${value} reports`,
+        })
+        polygon.states.create('active', {
+          scale: 1.05,
+          stroke: am5.color('#1A1A1A'),
+          strokeWidth: 1,
+        })
+        polygon.events.on('click', () => {
+          const state = id ? ID_TO_STATE[id] : null
+          applySelection(state)
+          if (onSelectState) onSelectState(state)
+        })
       })
     })
 
@@ -152,5 +155,5 @@ export default function IndiaMap({ stateData, selectedState, onSelectState }) {
     if (applySelectionRef.current) applySelectionRef.current(selectedState)
   }, [selectedState])
 
-  return <div ref={divRef} className="h-[520px] w-full" />
+  return <div ref={divRef} className="h-[280px] w-full sm:h-[400px] md:h-[480px] lg:h-[520px]" />
 }

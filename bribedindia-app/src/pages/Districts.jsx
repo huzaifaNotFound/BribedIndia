@@ -34,11 +34,11 @@ export default function Districts() {
       />
 
       <section className="mx-auto max-w-6xl px-4 py-10">
-        <div className="mt-6 panel">
+        <div className="mt-6 panel overflow-x-auto">
           {loading ? (
             <p className="p-6 text-sm text-muted">Loading…</p>
           ) : (
-            <table className="ledger-table">
+            <table className="ledger-table min-w-[560px]">
               <thead>
                 <tr>
                   <th className="w-14">Rank</th>

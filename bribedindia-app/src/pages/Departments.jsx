@@ -158,11 +158,11 @@ export default function Departments() {
           ))}
         </div>
 
-        <div className="mt-6 panel">
+        <div className="mt-6 panel overflow-x-auto">
           {loading ? (
             <p className="p-6 text-sm text-muted">Loading…</p>
           ) : (
-            <table className="ledger-table">
+            <table className="ledger-table min-w-[640px]">
               <thead>
                 <tr>
                   <th className="w-14">Rank</th>

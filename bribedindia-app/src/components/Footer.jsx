@@ -23,7 +23,6 @@ export default function Footer() {
             <div className="flex flex-col gap-2">
               <p className="label-upper-muted">Methodology</p>
               <span className="text-muted">Unverified → Pending Review → Verified</span>
-              <Link to="/admin/login" className="text-muted hover:text-ink">Admin</Link>
             </div>
           </div>
         </div>

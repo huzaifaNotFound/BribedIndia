@@ -30,19 +30,19 @@ const emptyForm = {
 function Progress({ current }) {
   const steps = ['Report type', 'Details', 'Review']
   return (
-    <div className="flex items-center gap-6">
+    <div className="flex items-center gap-2 sm:gap-6">
       {steps.map((label, i) => {
         const n = i + 1
         const state = n < current ? 'done' : n === current ? 'current' : 'todo'
         return (
-          <div key={label} className="flex items-center gap-6">
+          <div key={label} className="flex items-center gap-2 sm:gap-6">
             <div className="flex items-center gap-2">
               <span className={`step-circle ${state === 'current' ? 'active' : ''}`}>
                 {state === 'done' ? <Check size={16} /> : n}
               </span>
               <span className="label-upper hidden sm:inline">{label}</span>
             </div>
-            {n < steps.length ? <div className="h-px w-10 bg-line" /> : null}
+            {n < steps.length ? <div className="h-px w-6 bg-line sm:w-10" /> : null}
           </div>
         )
       })}
@@ -139,7 +139,7 @@ export default function ReportWizard() {
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-12">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="h-serif text-3xl">Report a Bribe</h1>
         <Progress current={step} />
       </div>
