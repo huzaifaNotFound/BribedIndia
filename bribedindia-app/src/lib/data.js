@@ -1,5 +1,5 @@
 import { supabase, isSupabaseConfigured } from './supabase.js'
-import { getReports, submitDemoReport, markClusterVerifiedDemo, markReportVerifiedDemo } from './demoStore.js'
+import { getReports, submitDemoReport, markClusterVerifiedDemo, markReportVerifiedDemo, deleteReportDemo } from './demoStore.js'
 
 export const DEMO_MODE = !isSupabaseConfigured
 
@@ -64,6 +64,18 @@ export async function markReportVerified(id) {
     return
   }
   markReportVerifiedDemo(id)
+}
+
+export async function deleteReport(id) {
+  if (isSupabaseConfigured) {
+    const { error } = await supabase
+      .from('reports')
+      .delete()
+      .eq('id', id)
+    if (error) throw error
+    return
+  }
+  deleteReportDemo(id)
 }
 
 export async function loginAdmin(email, password) {

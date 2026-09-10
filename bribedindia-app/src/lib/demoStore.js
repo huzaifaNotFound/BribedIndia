@@ -129,3 +129,8 @@ export function markReportVerifiedDemo(id) {
   if (report) report.status = 'verified'
   persist(reports)
 }
+
+export function deleteReportDemo(id) {
+  const reports = getReports().filter((r) => r.id !== id)
+  persist(reports)
+}

@@ -4,6 +4,7 @@ import { LogOut, Check, RotateCcw } from 'lucide-react'
 import {
   getAllReports,
   markReportVerified,
+  deleteReport,
   getAdminSession,
   signOutAdmin,
 } from '../../lib/data.js'
@@ -75,6 +76,20 @@ export default function AdminDashboard() {
       )
     } catch {
       setMessage('Could not verify report. Try again.')
+    } finally {
+      setVerifying(null)
+    }
+  }
+
+  const handleDelete = async (report) => {
+    setMessage(null)
+    setVerifying(report.id)
+    try {
+      await deleteReport(report.id)
+      await load()
+      setMessage('Report deleted.')
+    } catch {
+      setMessage('Could not delete report. Try again.')
     } finally {
       setVerifying(null)
     }
@@ -180,20 +195,30 @@ export default function AdminDashboard() {
                     · {relativeDate(report.created_at)}
                   </span>
                 </div>
-                <button
-                  type="button"
-                  disabled={verifying === report.id}
-                  onClick={() => handleVerify(report)}
-                  className="btn-primary flex items-center gap-1 px-3 py-1.5 text-[0.65rem] disabled:opacity-40"
-                >
-                  {verifying === report.id ? (
-                    'Verifying…'
-                  ) : (
-                    <>
-                      <Check size={12} /> Verify
-                    </>
-                  )}
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    disabled={verifying === report.id}
+                    onClick={() => handleVerify(report)}
+                    className="btn-primary flex items-center gap-1 px-3 py-1.5 text-[0.65rem] disabled:opacity-40"
+                  >
+                    {verifying === report.id ? (
+                      'Verifying…'
+                    ) : (
+                      <>
+                        <Check size={12} /> Verify
+                      </>
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    disabled={verifying === report.id}
+                    onClick={() => handleDelete(report)}
+                    className="flex items-center gap-1 border border-line px-3 py-1.5 text-[0.65rem] text-ink hover:bg-ink hover:text-white disabled:opacity-40"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
 
               {/* Department + location */}
