@@ -39,6 +39,7 @@ export default function AdminDashboard() {
   const [filter, setFilter] = useState('all')
   const [message, setMessage] = useState(null)
   const [verifying, setVerifying] = useState(null)
+  const [deleting, setDeleting] = useState(null)
 
   const load = async () => {
     const all = await getAllReports()
@@ -83,7 +84,7 @@ export default function AdminDashboard() {
 
   const handleDelete = async (report) => {
     setMessage(null)
-    setVerifying(report.id)
+    setDeleting(report.id)
     try {
       await deleteReport(report.id)
       await load()
@@ -91,7 +92,7 @@ export default function AdminDashboard() {
     } catch {
       setMessage('Could not delete report. Try again.')
     } finally {
-      setVerifying(null)
+      setDeleting(null)
     }
   }
 
@@ -198,7 +199,7 @@ export default function AdminDashboard() {
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
-                    disabled={verifying === report.id}
+                    disabled={verifying === report.id || deleting === report.id}
                     onClick={() => handleVerify(report)}
                     className="btn-primary flex items-center gap-1 px-3 py-1.5 text-[0.65rem] disabled:opacity-40"
                   >
@@ -212,11 +213,11 @@ export default function AdminDashboard() {
                   </button>
                   <button
                     type="button"
-                    disabled={verifying === report.id}
+                    disabled={verifying === report.id || deleting === report.id}
                     onClick={() => handleDelete(report)}
-                    className="flex items-center gap-1 border border-line px-3 py-1.5 text-[0.65rem] text-ink hover:bg-ink hover:text-white disabled:opacity-40"
+                    className="flex items-center gap-1 border border-line px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-wider text-ink hover:border-red-600 hover:bg-red-600 hover:text-white disabled:opacity-40"
                   >
-                    Delete
+                    {deleting === report.id ? 'Deleting…' : 'Delete'}
                   </button>
                 </div>
               </div>
