@@ -1,5 +1,5 @@
 import { supabase, isSupabaseConfigured } from './supabase.js'
-import { getReports, submitDemoReport, markClusterVerifiedDemo } from './demoStore.js'
+import { getReports, submitDemoReport, markClusterVerifiedDemo, markReportVerifiedDemo } from './demoStore.js'
 
 export const DEMO_MODE = !isSupabaseConfigured
 
@@ -52,6 +52,18 @@ export async function markClusterVerified(departmentCode, state, service) {
     return
   }
   markClusterVerifiedDemo(departmentCode, state, service)
+}
+
+export async function markReportVerified(id) {
+  if (isSupabaseConfigured) {
+    const { error } = await supabase
+      .from('reports')
+      .update({ status: 'verified' })
+      .eq('id', id)
+    if (error) throw error
+    return
+  }
+  markReportVerifiedDemo(id)
 }
 
 export async function loginAdmin(email, password) {

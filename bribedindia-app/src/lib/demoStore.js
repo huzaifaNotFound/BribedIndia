@@ -122,3 +122,10 @@ export function markClusterVerifiedDemo(departmentCode, state, service) {
   }
   persist(reports)
 }
+
+export function markReportVerifiedDemo(id) {
+  const reports = getReports()
+  const report = reports.find((r) => r.id === id)
+  if (report) report.status = 'verified'
+  persist(reports)
+}
