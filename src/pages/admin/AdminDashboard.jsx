@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { LogOut, Check, RotateCcw } from 'lucide-react'
+import { LogOut, Check, RotateCcw, X } from 'lucide-react'
 import {
   getAllReports,
   markReportVerified,
@@ -215,9 +215,15 @@ export default function AdminDashboard() {
                     type="button"
                     disabled={verifying === report.id || deleting === report.id}
                     onClick={() => handleDelete(report)}
-                    className="flex items-center gap-1 border border-line px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-wider text-ink hover:border-red-600 hover:bg-red-600 hover:text-white disabled:opacity-40"
+                    className="flex cursor-pointer items-center gap-1 border border-line px-3 py-1.5 text-[0.65rem] font-semibold uppercase tracking-wider text-ink hover:border-red-600 hover:bg-red-600 hover:text-white disabled:opacity-40"
                   >
-                    {deleting === report.id ? 'Deleting…' : 'Delete'}
+                    {deleting === report.id ? (
+                      'Deleting…'
+                    ) : (
+                      <>
+                        <X size={12} /> Delete
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
