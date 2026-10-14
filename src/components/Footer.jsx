@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { SITE_NAME, CREDIBILITY_NOTE } from '../lib/constants.js'
 
 export default function Footer() {
+  console.log("")
   return (
     <footer className="border-t border-line bg-bg">
       <div className="mx-auto max-w-6xl px-4 py-10">

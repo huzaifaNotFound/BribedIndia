@@ -13,7 +13,7 @@ const CaseStudies = lazy(() => import('./pages/CaseStudies.jsx'))
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin.jsx'))
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard.jsx'))
 
-function ScrollToTop() {
+function ScrollToTop() { 
   const { pathname } = useLocation()
   useEffect(() => {
     window.scrollTo(0, 0)
