@@ -29,28 +29,6 @@ BribedIndia separates submitted allegations from corroborated patterns and verif
 
 Multiple similar reports can indicate a pattern, but they do not independently establish that an allegation is true. Verification requires a separate review process.
 
-## Design Philosophy
-
-BribedIndia uses a restrained, data-journalism-inspired visual direction focused on clarity and credibility.
-
-- Off-white and near-black foundations with mustard-yellow accents.
-- Editorial typography combining serif display headings with clean sans-serif text.
-- Minimal interface elements, fine dividing lines, and data-dense tables.
-- Interactive geographic visualizations and clear statistical hierarchies.
-- A deliberate emphasis on evidence and institutional patterns rather than sensationalism.
-
-## Tech Stack
-
-The planned technology stack includes:
-
-- **Frontend:** React, Vite, Tailwind CSS
-- **Backend and Database:** Supabase and PostgreSQL
-- **Authentication and Access Control:** Supabase Auth and Row Level Security
-- **Geographic Visualization:** Leaflet with OpenStreetMap, or an equivalent mapping solution
-- **AI Integration:** Optional AI-assisted categorization, duplicate detection, and summarization
-
-*The stack above describes the planned architecture; update it to reflect the technologies actually implemented in the current version.*
-
 ## Project Goals
 
 1. Make information about reported bribery more accessible.
